@@ -38,9 +38,6 @@ export default {
 
     // Simple usage
     'nuxt-buefy',
-
-    // Or you can customize
-    ['nuxt-buefy', { css: false, materialDesignIcons: false }],
   ],
 
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
