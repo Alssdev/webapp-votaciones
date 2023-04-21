@@ -7,26 +7,29 @@
   >
     <div class="p-4">
       <b-menu>
+        <b-menu-list label="Inicio">
+          <b-menu-item icon="home" label="Incio" @click="$menu('/')" />
+        </b-menu-list>  
         <b-menu-list label="Administración">
           <b-menu-item icon="earth" label="Departamentos">
-            <b-menu-item icon="pencil" label="Crear" />
-            <b-menu-item icon="magnify" label="Ver lista" />
+            <b-menu-item icon="pencil" label="Crear" @click="$menu('/departamentos/crear')" />
+            <b-menu-item icon="magnify" label="Ver lista" @click="$menu('/departamentos/listar')" />
           </b-menu-item>
           <b-menu-item icon="earth" label="Municipios">
-            <b-menu-item icon="pencil" label="Crear" />
-            <b-menu-item icon="magnify" label="Ver lista" />
+            <b-menu-item icon="pencil" label="Crear" @click="$menu('/municipios/crear')" />
+            <b-menu-item icon="magnify" label="Ver lista" @click="$menu('/municipios/listar')" />
           </b-menu-item>
           <b-menu-item icon="office-building" label="Establecimientos">
-            <b-menu-item icon="pencil" label="Crear" />
-            <b-menu-item icon="magnify" label="Ver lista" />
+            <b-menu-item icon="pencil" label="Crear" @click="$menu('/establecimientos/crear')" />
+            <b-menu-item icon="magnify" label="Ver lista" @click="$menu('/establecimientos/listar')" />
           </b-menu-item>
           <b-menu-item icon="package-variant" label="Mesas">
-            <b-menu-item icon="pencil" label="Crear" />
-            <b-menu-item icon="magnify" label="Ver lista" />
+            <b-menu-item icon="pencil" label="Crear" @click="$menu('/mesas/crear')" />
+            <b-menu-item icon="magnify" label="Ver lista" @click="$menu('/mesas/listar')" />
           </b-menu-item>
           <b-menu-item icon="account-group" label="Partidos políticos">
-            <b-menu-item icon="pencil" label="Crear" />
-            <b-menu-item icon="magnify" label="Ver lista" />
+            <b-menu-item icon="pencil" label="Crear" @click="$menu('/partidos/crear')" />
+            <b-menu-item icon="magnify" label="Ver lista" @click="$menu('/partidos/listar')" />
           </b-menu-item>
         </b-menu-list>
         <b-menu-list label="Empadronamiento">
@@ -42,3 +45,9 @@
     </div>
   </b-sidebar>
 </template>
+
+<script>
+export default {
+
+}
+</script>
