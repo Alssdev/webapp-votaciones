@@ -6,7 +6,9 @@
     "dev": "nuxt",
     "build": "nuxt build",
     "start": "nuxt start",
-    "generate": "nuxt generate"
+    "generate": "nuxt generate",
+    "css-build": "node-sass ./assets/bulma.scss ./static/bulma.css",
+    "css-watch": "node-sass --watch ./assets/bulma.scss ./static/bulma.css"
   },
   "dependencies": {
     "@nuxtjs/axios": "^5.13.6",
@@ -16,5 +18,8 @@
     "vue": "^2.7.10",
     "vue-server-renderer": "^2.7.10",
     "vue-template-compiler": "^2.7.10"
+  },
+  "devDependencies": {
+    "node-sass": "8.0.0"
   }
 }
