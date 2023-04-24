@@ -34,7 +34,7 @@
         </b-menu-list>
         <b-menu-list label="Empadronamiento">
           <b-menu-item icon="account-multiple-check" label="Ciudadanos">
-            <b-menu-item icon="pencil" label="Registrar" />
+            <b-menu-item icon="pencil" label="Registrar" @click="$menu('/ciudadanos/empadronar')" />
             <b-menu-item icon="magnify" label="Ver lista" />
           </b-menu-item>
         </b-menu-list>

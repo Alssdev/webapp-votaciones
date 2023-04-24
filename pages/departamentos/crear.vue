@@ -7,7 +7,8 @@
     </b-field>
 
     <div class="buttons mt-6">
-      <b-button icon="pencil" type="is-primary">Crear</b-button>
+      <b-button icon-left="arrow-left">Regresar</b-button>
+      <b-button icon-left="pencil" type="is-primary">Crear</b-button>
     </div>
   </div>
 </template>

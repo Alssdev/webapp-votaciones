@@ -6,7 +6,7 @@
     @select="select"
     clearable
     open-on-focus
-    placeholder="Buscar departamento..."
+    placeholder="Buscar municipio..."
   >
   </b-autocomplete>
 </template>
@@ -14,14 +14,14 @@
 <script>
 export default {
   data: () => ({
-    departamentos: [],
+    municipios: [],
     selected: null,
     name: ''
   }),
 
   computed: {
     filteredData() {
-      return this.departamentos.filter(option => {
+      return this.municipios.filter(option => {
         return (
           option.nombre
             .toString()
@@ -33,13 +33,13 @@ export default {
   },
 
   created () {
-    this.fetchDepartamentos();
+    this.fetchMunicipios();
   },
   
 
   methods: {
-    fetchDepartamentos () {
-      this.departamentos = [
+    fetchMunicipios () {
+      this.municipios = [
         { nombre: 'Guatemala' },
         { nombre: 'Peten' },
         { nombre: 'Huehuetenango' }
