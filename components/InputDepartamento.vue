@@ -36,21 +36,21 @@ export default {
     this.fetchDepartamentos();
   },
   
-
   methods: {
-    fetchDepartamentos () {
-      this.departamentos = [
-        { nombre: 'Guatemala' },
-        { nombre: 'Peten' },
-        { nombre: 'Huehuetenango' }
-      ]
+    async fetchDepartamentos () {
+      try {
+        const response = await this.$axios.$get('/departamentos');
+        this.departamentos = response.list;
+      } catch (error) {
+        this.$errorHandler(error);
+      }
     },
 
     select (option) {
       if (option) {
         this.$emit('select', option);
       } else {
-        this.$emit('select', { id: null });
+        this.$emit('select', { nombre: null });
       }
     }
   }
