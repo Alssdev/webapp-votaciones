@@ -11,6 +11,7 @@
     "css-watch": "node-sass --watch ./assets/bulma.scss ./static/bulma.css"
   },
   "dependencies": {
+    "@nuxt/types": "^2.16.3",
     "@nuxtjs/axios": "^5.13.6",
     "core-js": "^3.25.3",
     "nuxt": "^2.15.8",
