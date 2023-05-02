@@ -19,6 +19,12 @@
           icon-left="pencil"
         />
       </b-table-column>
+      <b-table-column label="Eliminar" v-slot="props" width="80">
+        <b-button
+          type="is-danger"
+          icon-left="delete"
+        />
+      </b-table-column>
     </b-table>
   </div>
 </template>
