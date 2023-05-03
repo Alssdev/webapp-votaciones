@@ -6,7 +6,7 @@
     @select="select"
     clearable
     open-on-focus
-    placeholder="Buscar municipio..."
+    placeholder="Buscar municipios..."
   >
   </b-autocomplete>
 </template>
@@ -36,21 +36,21 @@ export default {
     this.fetchMunicipios();
   },
   
-
   methods: {
-    fetchMunicipios () {
-      this.municipios = [
-        { nombre: 'Guatemala' },
-        { nombre: 'Peten' },
-        { nombre: 'Huehuetenango' }
-      ]
+    async fetchMunicipios () {
+      try {
+        const response = await this.$axios.$get('/municipios');
+        this.municipios = response.list;
+      } catch (error) {
+        this.$errorHandler(error);
+      }
     },
 
     select (option) {
       if (option) {
         this.$emit('select', option);
       } else {
-        this.$emit('select', { id: null });
+        this.$emit('select', { idmunicipio: null });
       }
     }
   }

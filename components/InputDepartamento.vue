@@ -13,6 +13,13 @@
 
 <script>
 export default {
+  props: {
+    defaultText: {
+      type: String,
+      default: ''
+    }
+  },
+
   data: () => ({
     departamentos: [],
     selected: null,
@@ -34,6 +41,17 @@ export default {
 
   created () {
     this.fetchDepartamentos();
+    this.name = this.defaultText;
+  },
+
+  watch: {
+    defaultText (newValue) {
+      if (typeof newValue === 'string') {
+        this.name = newValue;
+      } else {
+        this.name = '';
+      }
+    }
   },
   
   methods: {

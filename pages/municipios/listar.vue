@@ -23,6 +23,7 @@
         <b-button
           type="is-primary"
           icon-left="pencil"
+          @click="$menu(`/municipios/${props.row.idmunicipio}/edit`)"
         />
       </b-table-column>
       <b-table-column label="Eliminar" v-slot="props" width="80">
