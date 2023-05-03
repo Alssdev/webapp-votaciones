@@ -11,11 +11,20 @@
       paginated
     >
       <b-table-column label="Nombre" field="nombre" v-slot="props" sortable searchable>
-        {{ props.row.nombre }}
+        <nuxt-link :to="{ path: `/departamentos/${props.row.nombre}/data` }">
+          {{ props.row.nombre }}
+        </nuxt-link>
+      </b-table-column>
+      <b-table-column label="Datos" v-slot="props" width="80">
+        <b-button
+          type="is-info"
+          icon-left="information"
+          @click="$menu(`/departamentos/${props.row.nombre}/data`)"
+        />
       </b-table-column>
       <b-table-column label="Editar" v-slot="props" width="80">
         <b-button
-          type="is-info"
+          type="is-warning"
           icon-left="pencil"
         />
       </b-table-column>

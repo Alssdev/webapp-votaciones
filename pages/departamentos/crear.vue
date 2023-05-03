@@ -7,7 +7,7 @@
     </b-field>
 
     <div class="buttons mt-6">
-      <b-button icon-left="arrow-left">Regresar</b-button>
+      <b-button icon-left="arrow-left" @click="$goBack">Regresar</b-button>
       <b-button icon-left="check-bold" type="is-primary" @click="confirm">Crear</b-button>
     </div>
   </div>

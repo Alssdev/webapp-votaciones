@@ -14,7 +14,9 @@
         {{ props.row.nombre }}
       </b-table-column>
       <b-table-column field="dnombre" label="Departamento" searchable sortable v-slot="props">
-        {{ props.row.dnombre }}
+        <nuxt-link :to="{ path: `/departamentos/${props.row.dnombre}/data` }">
+          {{ props.row.dnombre }}
+        </nuxt-link>
       </b-table-column>
       <b-table-column field="numh" label="Num. Habitantes" sortable v-slot="props">
         {{ props.row.numh }}
