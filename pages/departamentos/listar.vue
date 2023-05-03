@@ -15,7 +15,7 @@
       </b-table-column>
       <b-table-column label="Editar" v-slot="props" width="80">
         <b-button
-          type="is-primary"
+          type="is-info"
           icon-left="pencil"
         />
       </b-table-column>

@@ -3,11 +3,11 @@
     <h1 class="title">Crear un establecimiento</h1>
 
     <b-field label="Nombre">
-      <b-input placeholder="Nombre del establecimiento" maxlength="50" />
+      <b-input v-model="nombre" placeholder="Nombre del establecimiento" maxlength="50" />
     </b-field>
 
     <b-field label="Dirección">
-      <b-input placeholder="Ciudad" type="textarea" maxlength="200" />
+      <b-input v-model="direccion" placeholder="Ciudad" type="textarea" maxlength="200" />
     </b-field>
 
     <b-field label="Municipio">
