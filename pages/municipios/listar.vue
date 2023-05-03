@@ -11,7 +11,9 @@
       paginated
     >
       <b-table-column field="nombre" label="Nombre" searchable sortable v-slot="props">
-        {{ props.row.nombre }}
+        <nuxt-link :to="{ path: `/municipios/${props.row.idmunicipio}/data` }">
+          {{ props.row.nombre }}
+        </nuxt-link>
       </b-table-column>
       <b-table-column field="dnombre" label="Departamento" searchable sortable v-slot="props">
         <nuxt-link :to="{ path: `/departamentos/${props.row.dnombre}/data` }">
@@ -21,9 +23,16 @@
       <b-table-column field="numh" label="Num. Habitantes" sortable v-slot="props">
         {{ props.row.numh }}
       </b-table-column>
-      <b-table-column label="Editar" v-slot="props" width="80">
+      <b-table-column label="Datos" v-slot="props" width="80">
         <b-button
           type="is-info"
+          icon-left="information"
+          @click="$menu(`/municipios/${props.row.idmunicipio}/data`)"
+        />
+      </b-table-column>
+      <b-table-column label="Editar" v-slot="props" width="80">
+        <b-button
+          type="is-warning"
           icon-left="pencil"
           @click="$menu(`/municipios/${props.row.idmunicipio}/edit`)"
         />
