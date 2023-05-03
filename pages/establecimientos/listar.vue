@@ -63,12 +63,12 @@ export default {
       }
     },
 
-    async delete (idmunicipio) {
+    async delete (idest) {
       try {
-        await this.$axios.$delete(`/municipios/${idmunicipio}`);
+        await this.$axios.delete(`/establecimientos/${idest}`);
         this.$buefy.notification.open({
           type: 'is-success',
-          message: 'El municipio ha sido borrado con éxito',
+          message: 'El establecimiento ha sido borrado con éxito',
           duration: 5000
         });
         this.fetchData();
@@ -76,12 +76,12 @@ export default {
         this.$errorHandler(error);
       }
     },
-    confirmDelete (nombre) {
+    confirmDelete (idest) {
       this.$buefy.dialog.confirm({
         title: 'Confirmación',
         message: `Antes de completar el proceso debe 
         confirmar que está seguro ¿Desea continuar?`,
-        onConfirm: () => { this.delete(nombre) },
+        onConfirm: () => { this.delete(idest) },
         hasIcon: true,
         type: 'is-danger',
       });
