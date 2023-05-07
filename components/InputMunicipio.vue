@@ -19,9 +19,9 @@ export default {
       type: Number,
       default: null
     },
-    defaultText: {
-      type: String,
-      default: ''
+    idmunicipio: {
+      type: Number,
+      default: null
     },
     requireDepto: {
       type: Boolean,
@@ -32,10 +32,10 @@ export default {
   data: () => ({
     municipios: [],
     selected: null,
+    name: '',
     
     // control data
-    name: '',
-    fetchFinished: false
+    // empty
   }),
 
   computed: {
@@ -61,26 +61,31 @@ export default {
 
   watch: {
     iddep () {
-      if (this.fetchFinished) {
-        console.log('2');
-        this.name = '';
-        this.select(null);
-      }
+      this.clearAllData();
     },
-    
+    idmunicipio (idmunicipio) {
+      if (typeof idmunicipio === 'number') {
+        if (this.municipios.length !== 0) {
+          // only if fetch has finished
+          this.selectByIdmunicipio(idmunicipio);
+        }
+      } else {
+        this.clearAllData();
+      }
+    }
   },
   
   methods: {
     async fetchMunicipios () {
       try {
+        // fetch Data
         const response = await this.$axios.$get('/municipios');
         this.municipios = response.list;
 
-        if (this.defaultText.length !== 0) {
-          this.name = this.defaultText;
-          this.selectByName(this.defaultText);
+        // autoselect
+        if (typeof this.idmunicipio === 'number') {
+          this.selectByIdmunicipio(this.idmunicipio);
         }
-        this.fetchFinished = true;
       } catch (error) {
         this.$errorHandler(error);
       }
@@ -88,14 +93,20 @@ export default {
 
     select (option) {
       if (option) {
+        this.name = option.nombre;
         this.$emit('select', option);
-      } else {
-        this.$emit('select', { idmunicipio: null });
       }
     },
-    selectByName (nombre) {
-      const selected = (this.municipios.filter(option => (option.nombre === nombre)))[0];
+    unset () {
+      this.$emit('select', { idmunicipio: null });
+    },
+    selectByIdmunicipio (idmunicipio) {
+      const selected = (this.municipios.filter(option => (option.idmunicipio === idmunicipio)))[0];
       this.select(selected);
+    },
+    clearAllData () {
+      this.name = '';
+      this.unset();
     }
   }
 }

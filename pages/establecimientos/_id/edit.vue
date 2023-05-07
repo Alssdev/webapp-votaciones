@@ -17,7 +17,7 @@
     </b-field>
 
     <b-field label="Municipio">
-      <input-municipio :defaultText="nombreMuni" :iddep="iddep" @select="selectMunicipio" requireDepto />
+      <input-municipio :idmunicipio="idmunicipio" :iddep="iddep" @select="selectMunicipio" requireDepto />
     </b-field>
 
     <div class="buttons mt-6">
@@ -34,11 +34,13 @@ export default {
     establecimiento: {
       nombre: '',
       direccion: '',
-      idmunicipio: null
+      idmunicipio: null,
+      municipio: {}
     },
-    nombreMuni: '',
-    nombreDepto: '',
+
+    // control data
     iddep: null,
+    idmunicipio: null,
   }),
 
   created () {
@@ -92,9 +94,8 @@ export default {
         const response = await this.$axios.$get(`/establecimientos/${this.idest}`);
         this.establecimiento = response.list[0];
 
-        this.nombreMuni = this.establecimiento.municipio.nombre;
-        this.nombreDepto = this.establecimiento.municipio.depto.nombre;
         this.iddep = this.establecimiento.municipio.depto.iddep;
+        this.idmunicipio = this.establecimiento.municipio.idmunicipio;
       } catch (error) {
         this.$errorHandler(error);
       }

@@ -84,7 +84,6 @@ export default {
       }
     },
     unset () {
-      this.selected = false;
       this.$emit('select', { iddep: null });
     },
     selectByIddep (iddep) {
