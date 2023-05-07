@@ -11,7 +11,7 @@
       <b-input :value="municipio.numh" readonly />
     </b-field>
     <b-field label="Departamento">
-      <b-input :value="municipio.dnombre"></b-input>
+      <b-input :value="municipio.depto.nombre"></b-input>
     </b-field>
 
     <div class="buttons mt-6">
@@ -41,7 +41,8 @@ export default {
     municipio: {
       nombre: '',
       numh: 0,
-      dnombre: null
+      iddep: null,
+      depto: {},
     },
   }),
 

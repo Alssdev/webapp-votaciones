@@ -24,7 +24,7 @@ export default {
   data: () => ({
     nombre: '',
     numh: 0,
-    dnombre: null
+    iddep: null
   }),
 
   methods: {
@@ -47,7 +47,7 @@ export default {
       return {
         nombre: this.nombre,
         numh: this.numh,
-        dnombre: this.dnombre
+        iddep: this.iddep
       }
     },
     confirm () {
@@ -68,9 +68,9 @@ export default {
 
     selectDepartamento (option) {
       if (option.nombre !== null) {
-        this.dnombre = option.nombre;
+        this.iddep = option.iddep;
       } else {
-        this.dnombre = null;
+        this.iddep = null;
       }
     }
   }

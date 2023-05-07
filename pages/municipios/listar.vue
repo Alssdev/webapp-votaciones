@@ -15,9 +15,9 @@
           {{ props.row.nombre }}
         </nuxt-link>
       </b-table-column>
-      <b-table-column field="dnombre" label="Departamento" searchable sortable v-slot="props">
-        <nuxt-link :to="{ path: `/departamentos/${props.row.dnombre}/data` }">
-          {{ props.row.dnombre }}
+      <b-table-column field="depto.nombre" label="Departamento" searchable sortable v-slot="props">
+        <nuxt-link :to="{ path: `/departamentos/${props.row.depto.iddep}/data` }">
+          {{ props.row.depto.nombre }}
         </nuxt-link>
       </b-table-column>
       <b-table-column field="numh" label="Num. Habitantes" sortable v-slot="props">
@@ -64,6 +64,7 @@ export default {
       try {
         const response = await this.$axios.$get('/municipios');
         this.list = response.list;
+        console.log(this.list);
       } catch (error) {
         this.$errorHandler(error);
       }

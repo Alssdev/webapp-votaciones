@@ -41,7 +41,9 @@ export default {
 
   created () {
     this.fetchDepartamentos();
-    this.name = this.defaultText;
+    if (typeof this.defaultText === 'string') {
+      this.name = this.defaultText;
+    }
   },
 
   watch: {
@@ -68,7 +70,7 @@ export default {
       if (option) {
         this.$emit('select', option);
       } else {
-        this.$emit('select', { nombre: null });
+        this.$emit('select', { iddep: null });
       }
     }
   }

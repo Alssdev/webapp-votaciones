@@ -28,7 +28,7 @@ export default {
     municipio: {
       nombre: '',
       numh: 0,
-      dnombre: null
+      iddep: null
     },
 
     dnombre: null,
@@ -61,7 +61,7 @@ export default {
       return {
         nombre: this.municipio.nombre,
         numh: this.municipio.numh,
-        dnombre: this.municipio.dnombre
+        iddep: this.municipio.iddep
       }
     },
     confirm () {
@@ -84,17 +84,17 @@ export default {
       try {
         const response = await this.$axios.$get(`/municipios/${this.idmunicipio}`);
         this.municipio = response.list[0];
-        this.dnombre = this.municipio.dnombre;
+        this.dnombre = this.municipio.depto.nombre;
       } catch (error) {
         this.$errorHandler(error);
       }
     },
 
     selectDepartamento (option) {
-      if (option.nombre !== null) {
-        this.municipio.dnombre = option.nombre;
+      if (option.iddep !== null) {
+        this.municipio.iddep = option.iddep;
       } else {
-        this.municipio.dnombre = null;
+        this.municipio.iddep = null;
       }
     }
   }
