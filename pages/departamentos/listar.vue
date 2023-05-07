@@ -19,20 +19,21 @@
         <b-button
           type="is-info"
           icon-left="information"
-          @click="$menu(`/departamentos/${props.row.nombre}/data`)"
+          @click="$menu(`/departamentos/${props.row.iddep}/data`)"
         />
       </b-table-column>
       <b-table-column label="Editar" v-slot="props" width="80">
         <b-button
           type="is-warning"
           icon-left="pencil"
+          @click="$menu(`/departamentos/${props.row.iddep}/edit`)"
         />
       </b-table-column>
       <b-table-column label="Eliminar" v-slot="props" width="80">
         <b-button
           type="is-danger"
           icon-left="delete"
-          @click="confirmDelete(props.row.nombre)"
+          @click="confirmDelete(props.row.iddep)"
         />
       </b-table-column>
     </b-table>
@@ -60,9 +61,9 @@ export default {
       }
     },
 
-    async delete (nombre) {
+    async delete (iddep) {
       try {
-        await this.$axios.$delete(`/departamentos/${nombre}`);
+        await this.$axios.$delete(`/departamentos/${iddep}`);
         this.$buefy.notification.open({
           type: 'is-success',
           message: 'El deparamento ha sido borrado con éxito',
@@ -73,12 +74,12 @@ export default {
         this.$errorHandler(error);
       }
     },
-    confirmDelete (nombre) {
+    confirmDelete (iddep) {
       this.$buefy.dialog.confirm({
         title: 'Confirmación',
         message: `Antes de completar el proceso debe 
         confirmar que está seguro ¿Desea continuar?`,
-        onConfirm: () => { this.delete(nombre) },
+        onConfirm: () => { this.delete(iddep) },
         hasIcon: true,
         type: 'is-danger',
       });
