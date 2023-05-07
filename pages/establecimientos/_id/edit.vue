@@ -12,8 +12,12 @@
       <b-input v-model="establecimiento.direccion" placeholder="Ciudad" type="textarea" maxlength="200" />
     </b-field>
 
+    <b-field label="Departamento">
+      <input-departamento :defaultText="nombreDepto" @select="selectDepartamento" />
+    </b-field>
+
     <b-field label="Municipio">
-      <input-municipio @select="selectMunicipio" />
+      <input-municipio :defaultText="nombreMuni"  :disabled="disableMunicipios" :iddep="iddep" @select="selectMunicipio" />
     </b-field>
 
     <div class="buttons mt-6">
@@ -32,8 +36,16 @@ export default {
       direccion: '',
       idmunicipio: null
     },
-    nombreMuni: 'prueba de nombre'
+    nombreMuni: '',
+    nombreDepto: '',
+    iddep: null,
   }),
+
+  computed: {
+    disableMunicipios () {
+      return typeof this.iddep !== 'number';
+    }
+  },
 
   created () {
     if (!isNaN(this.$route.params.id)) {
@@ -85,7 +97,10 @@ export default {
       try {
         const response = await this.$axios.$get(`/establecimientos/${this.idest}`);
         this.establecimiento = response.list[0];
-        // this.nombreMuni = ... PENDIENTE
+
+        this.nombreMuni = this.establecimiento.municipio.nombre;
+        this.nombreDepto = this.establecimiento.municipio.depto.nombre;
+        this.iddep = this.establecimiento.municipio.depto.iddep;
       } catch (error) {
         this.$errorHandler(error);
       }
@@ -97,6 +112,15 @@ export default {
       } else {
         this.establecimiento.idmunicipio = null;
       }
+    },
+    selectDepartamento (option) {
+      if (option.iddep !== null) {
+        this.iddep = option.iddep;
+      } else {
+        this.iddep = null;
+      }
+      this.nombreMuni = '';
+      this.establecimiento.idmunicipio = null;
     }
   }
 }

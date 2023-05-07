@@ -10,8 +10,12 @@
       <b-input v-model="direccion" placeholder="Ciudad" type="textarea" maxlength="200" />
     </b-field>
 
+    <b-field label="Departamento">
+      <input-departamento @select="selectDepartamento" />
+    </b-field>
+
     <b-field label="Municipio">
-      <input-municipio @select="selectMunicipio" />
+      <input-municipio :disabled="disableMunicipios" :iddep="iddep" @select="selectMunicipio" />
     </b-field>
 
     <div class="buttons mt-6">
@@ -26,8 +30,15 @@ export default {
   data: () => ({
     nombre: '',
     direccion: '',
-    idmunicipio: null
+    idmunicipio: null,
+    iddep: null
   }),
+
+  computed: {
+    disableMunicipios () {
+      return typeof this.iddep !== 'number';
+    }
+  },
 
   methods : {
     async pushData () {
@@ -74,6 +85,14 @@ export default {
       } else {
         this.idmunicipio = null;
       }
+    },
+    selectDepartamento (option) {
+      if (option.iddep !== null) {
+        this.iddep = option.iddep;
+      } else {
+        this.iddep = null;
+      }
+      this.idmunicipio = null;
     }
   }
 }

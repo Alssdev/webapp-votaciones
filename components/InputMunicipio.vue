@@ -7,12 +7,28 @@
     clearable
     open-on-focus
     placeholder="Buscar municipios..."
+    :disabled="disabled"
   >
   </b-autocomplete>
 </template>
 
 <script>
 export default {
+  props: {
+    disabled: {
+      type: Boolean,
+      default: false
+    },
+    iddep: {
+      type: Number,
+      default: null
+    },
+    defaultText: {
+      type: String,
+      default: ''
+    }
+  },
+
   data: () => ({
     municipios: [],
     selected: null,
@@ -22,18 +38,28 @@ export default {
   computed: {
     filteredData() {
       return this.municipios.filter(option => {
-        return (
-          option.nombre
-            .toString()
+        const nameFilter = option.nombre
             .toLowerCase()
-            .indexOf(this.name.toLowerCase()) >= 0
-        )
-      })
+            .indexOf(this.name.toLowerCase()) >= 0;
+        const iddepFilter = typeof this.iddep === 'number' ? option.iddep === this.iddep : true;
+
+        return iddepFilter && nameFilter;
+      });
     }
   },
 
   created () {
     this.fetchMunicipios();
+  },
+
+  watch: {
+    defaultText (newValue) {
+      if (typeof newValue === 'string') {
+        this.name = newValue;
+      } else {
+        this.name = '';
+      }
+    }
   },
   
   methods: {

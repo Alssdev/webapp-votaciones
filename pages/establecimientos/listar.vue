@@ -17,15 +17,22 @@
     <b-table-column field="nombre" label="Nombre" searchable v-slot="props">
       {{ props.row.nombre }}
     </b-table-column>
-    <b-table-column label="Departamento" v-slot="props">
-      Pendiente
+    <b-table-column field="municipio.depto.nombre" label="Departamento" searchable sortable v-slot="props">
+      {{ props.row.municipio.depto.nombre }}
     </b-table-column>
-    <b-table-column label="Municipio" v-slot="props">
-      Pendiente
+    <b-table-column field="municipio.nombre" label="Municipio" searchable sortable v-slot="props">
+      {{ props.row.municipio.nombre }}
+    </b-table-column>
+    <b-table-column label="Datos" v-slot="props" width="80">
+      <b-button
+        type="is-info"
+        icon-left="information"
+        @click="$menu(`/establecimientos/${props.row.idest}/data`)"
+      />
     </b-table-column>
     <b-table-column label="Editar" v-slot="props" width="80">
       <b-button
-        type="is-info"
+        type="is-warning"
         icon-left="pencil"
         @click="$menu(`/establecimientos/${props.row.idest}/edit`)"
       />
