@@ -15,10 +15,6 @@
 <script>
 export default {
   props: {
-    disabled: {
-      type: Boolean,
-      default: false
-    },
     iddep: {
       type: Number,
       default: null
@@ -26,13 +22,20 @@ export default {
     defaultText: {
       type: String,
       default: ''
+    },
+    requireDepto: {
+      type: Boolean,
+      default: false
     }
   },
 
   data: () => ({
     municipios: [],
     selected: null,
-    name: ''
+    
+    // control data
+    name: '',
+    fetchFinished: false
   }),
 
   computed: {
@@ -45,6 +48,10 @@ export default {
 
         return iddepFilter && nameFilter;
       });
+    },
+
+    disabled () {
+      return (this.requireDepto ? typeof this.iddep !== 'number' : false);
     }
   },
 
@@ -53,13 +60,14 @@ export default {
   },
 
   watch: {
-    defaultText (newValue) {
-      if (typeof newValue === 'string') {
-        this.name = newValue;
-      } else {
+    iddep () {
+      if (this.fetchFinished) {
+        console.log('2');
         this.name = '';
+        this.select(null);
       }
-    }
+    },
+    
   },
   
   methods: {
@@ -67,6 +75,12 @@ export default {
       try {
         const response = await this.$axios.$get('/municipios');
         this.municipios = response.list;
+
+        if (this.defaultText.length !== 0) {
+          this.name = this.defaultText;
+          this.selectByName(this.defaultText);
+        }
+        this.fetchFinished = true;
       } catch (error) {
         this.$errorHandler(error);
       }
@@ -78,6 +92,10 @@ export default {
       } else {
         this.$emit('select', { idmunicipio: null });
       }
+    },
+    selectByName (nombre) {
+      const selected = (this.municipios.filter(option => (option.nombre === nombre)))[0];
+      this.select(selected);
     }
   }
 }

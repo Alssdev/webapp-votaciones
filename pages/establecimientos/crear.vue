@@ -15,7 +15,7 @@
     </b-field>
 
     <b-field label="Municipio">
-      <input-municipio :disabled="disableMunicipios" :iddep="iddep" @select="selectMunicipio" />
+      <input-municipio :iddep="iddep" @select="selectMunicipio" requireDepto />
     </b-field>
 
     <div class="buttons mt-6">
@@ -33,12 +33,6 @@ export default {
     idmunicipio: null,
     iddep: null
   }),
-
-  computed: {
-    disableMunicipios () {
-      return typeof this.iddep !== 'number';
-    }
-  },
 
   methods : {
     async pushData () {

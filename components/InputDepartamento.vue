@@ -4,9 +4,10 @@
     :data="filteredData"
     field="nombre"
     @select="select"
+    @typing="unset"
     clearable
     open-on-focus
-    placeholder="Buscar departamento..."
+    placeholder="Buscar departamentos..."
   >
   </b-autocomplete>
 </template>
@@ -14,16 +15,18 @@
 <script>
 export default {
   props: {
-    defaultText: {
-      type: String,
-      default: ''
+    iddep: {
+      type: Number,
+      default: null
     }
   },
 
   data: () => ({
     departamentos: [],
-    selected: null,
-    name: ''
+    name: '',
+
+    // control data
+    // empty
   }),
 
   computed: {
@@ -39,28 +42,36 @@ export default {
     }
   },
 
-  created () {
-    this.fetchDepartamentos();
-    if (typeof this.defaultText === 'string') {
-      this.name = this.defaultText;
+  watch: {
+    iddep (iddep) {
+      if (typeof iddep === 'number') {
+        if (this.departamentos.length !== 0) {
+          // only if fetch has finished
+          this.selectByIddep(iddep);
+        }
+      } else {
+        // clear all data
+        this.name = '';
+        this.unset();
+      }
     }
   },
 
-  watch: {
-    defaultText (newValue) {
-      if (typeof newValue === 'string') {
-        this.name = newValue;
-      } else {
-        this.name = '';
-      }
-    }
+  created () {
+    this.fetchDepartamentos();
   },
   
   methods: {
     async fetchDepartamentos () {
       try {
+        // fetch data
         const response = await this.$axios.$get('/departamentos');
         this.departamentos = response.list;
+
+        // autoselect
+        if (typeof this.iddep === 'number') {
+          this.selectByIddep(this.iddep);
+        }
       } catch (error) {
         this.$errorHandler(error);
       }
@@ -68,10 +79,17 @@ export default {
 
     select (option) {
       if (option) {
+        this.name = option.nombre;
         this.$emit('select', option);
-      } else {
-        this.$emit('select', { iddep: null });
       }
+    },
+    unset () {
+      this.selected = false;
+      this.$emit('select', { iddep: null });
+    },
+    selectByIddep (iddep) {
+      const selected = (this.departamentos.filter(option => (option.iddep === iddep)))[0];
+      this.select(selected);
     }
   }
 }

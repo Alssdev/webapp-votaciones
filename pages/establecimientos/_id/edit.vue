@@ -13,11 +13,11 @@
     </b-field>
 
     <b-field label="Departamento">
-      <input-departamento :defaultText="nombreDepto" @select="selectDepartamento" />
+      <input-departamento :iddep="iddep" @select="selectDepartamento" />
     </b-field>
 
     <b-field label="Municipio">
-      <input-municipio :defaultText="nombreMuni"  :disabled="disableMunicipios" :iddep="iddep" @select="selectMunicipio" />
+      <input-municipio :defaultText="nombreMuni" :iddep="iddep" @select="selectMunicipio" requireDepto />
     </b-field>
 
     <div class="buttons mt-6">
@@ -40,12 +40,6 @@ export default {
     nombreDepto: '',
     iddep: null,
   }),
-
-  computed: {
-    disableMunicipios () {
-      return typeof this.iddep !== 'number';
-    }
-  },
 
   created () {
     if (!isNaN(this.$route.params.id)) {
@@ -119,8 +113,6 @@ export default {
       } else {
         this.iddep = null;
       }
-      this.nombreMuni = '';
-      this.establecimiento.idmunicipio = null;
     }
   }
 }
