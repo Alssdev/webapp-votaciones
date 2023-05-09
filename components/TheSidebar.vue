@@ -27,6 +27,10 @@
             <b-menu-item icon="pencil" label="Crear" @click="$menu('/mesas/crear')" />
             <b-menu-item icon="magnify" label="Ver lista" @click="$menu('/mesas/listar')" />
           </b-menu-item>
+          <b-menu-item icon="badge-account" label="Voluntarios">
+            <b-menu-item icon="pencil" label="Crear" @click="$menu('/voluntarios/crear')" />
+            <b-menu-item icon="magnify" label="Ver lista" @click="$menu('/voluntarios/listar')" />
+          </b-menu-item>
           <b-menu-item icon="account-group" label="Partidos políticos">
             <b-menu-item icon="pencil" label="Crear" @click="$menu('/partidos/crear')" />
             <b-menu-item icon="magnify" label="Ver lista" @click="$menu('/partidos/listar')" />
@@ -35,7 +39,7 @@
         <b-menu-list label="Empadronamiento">
           <b-menu-item icon="account-multiple-check" label="Ciudadanos">
             <b-menu-item icon="pencil" label="Registrar" @click="$menu('/ciudadanos/empadronar')" />
-            <b-menu-item icon="magnify" label="Ver lista" />
+            <b-menu-item icon="magnify" label="Ver lista" @click="$menu('/ciudadanos/listar')" />
           </b-menu-item>
         </b-menu-list>
         <b-menu-list label="Reportes">

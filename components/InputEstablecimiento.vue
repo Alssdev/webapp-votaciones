@@ -96,6 +96,8 @@ export default {
       if (option) {
         this.name = option.nombre;
         this.$emit('select', option);
+      } else {
+        this.unset();
       }
     },
     unset () {
