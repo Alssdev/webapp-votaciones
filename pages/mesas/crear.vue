@@ -3,9 +3,10 @@
     <h1 class="title">Crear una mesa</h1>
 
     <b-field label="Número de mesa">
-      <b-input type="number" placeholder="Ej. 5" max="10" min="0" />
+      <b-input v-model="nmesa" type="number" placeholder="Ej. 5" max="10" min="0" />
     </b-field>
 
+    <hr />
     <b-field label="Departamento">
       <input-departamento @select="selectDepartamento" />
     </b-field>
@@ -13,6 +14,11 @@
     <b-field label="Municipio">
       <input-municipio :iddep="iddep" @select="selectMunicipio" requireDepto />
     </b-field>
+
+    <b-field label="Establecimiento">
+      <input-establecimiento :idmunicipio="idmunicipio" @select="selectEstablecimiento" requireMuni />
+    </b-field>
+    <hr />
 
     <div class="buttons mt-6">
       <b-button icon-left="arrow-left" @click="$goBack">Regresar</b-button>
@@ -37,11 +43,11 @@ export default {
     async pushData () {
       try {
         const body = this.prepareBodyRequest();
-        await this.$axios.post('/departamentos', body);
+        await this.$axios.post('/mesas', body);
         
         this.$buefy.notification.open({
           type: 'is-success',
-          message: 'El deparamento ha sido creado con éxito',
+          message: 'La mesa ha sido creada con éxito',
           duration: 5000
         });
         this.$router.go(-1);
@@ -53,8 +59,8 @@ export default {
       return {
         nmesa: this.nmesa,
         idest: this.idest,
-        cotasuperior: 0,
-        cotainferior: 1,
+        cotasuperior: 1,
+        cotainferior: 0,
       };
     },
     confirm () {
@@ -73,21 +79,14 @@ export default {
       return true;
     },
 
-    selectMunicipio (option) {
-      if (option.idmunicipio !== null) {
-        this.idmunicipio = option.idmunicipio;
-      } else {
-        this.idmunicipio = null;
-      }
-    },
     selectDepartamento (option) {
-      if (option.iddep !== null) {
-        this.iddep = option.iddep;
-      } else {
-        this.iddep = null;
-      }
-
-      // unselect municipio and establecimiento
+      this.iddep = option.iddep;
+    },
+    selectMunicipio (option) {
+      this.idmunicipio = option.idmunicipio;
+    },
+    selectEstablecimiento (option) {
+      this.idest = option.idest;
     }
   }
 }

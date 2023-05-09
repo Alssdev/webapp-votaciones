@@ -11,7 +11,7 @@
     <div class="buttons mt-6">
       <b-button icon-left="arrow-left" @click="$goBack">Regresar</b-button>
       <b-button
-        type="is-info"
+        type="is-warning"
         icon-left="pencil"
         @click="$menu(`/departamentos/${iddep}/edit`)"
       >

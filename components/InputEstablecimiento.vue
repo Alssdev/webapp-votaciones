@@ -4,10 +4,9 @@
     :data="filteredData"
     field="nombre"
     @select="select"
-    @typing="unset"
     clearable
     open-on-focus
-    placeholder="Buscar municipios..."
+    placeholder="Buscar establecimientos..."
     :disabled="disabled"
   >
   </b-autocomplete>
@@ -16,7 +15,7 @@
 <script>
 export default {
   props: {
-    iddep: {
+    idest: {
       type: Number,
       default: null
     },
@@ -24,15 +23,14 @@ export default {
       type: Number,
       default: null
     },
-    requireDepto: {
+    requireMuni: {
       type: Boolean,
       default: false
     }
   },
 
   data: () => ({
-    municipios: [],
-    selected: null,
+    establecimientos: [],
     name: '',
     
     // control data
@@ -41,36 +39,36 @@ export default {
 
   computed: {
     filteredData() {
-      return this.municipios.filter(option => {
+      return this.establecimientos.filter(option => {
         const nameFilter = option.nombre
             .toLowerCase()
             .indexOf(this.name.toLowerCase()) >= 0;
-        const iddepFilter = typeof this.iddep === 'number' ? option.iddep === this.iddep : true;
+        const muniFilter = typeof this.idmunicipio === 'number' ? option.idmunicipio === this.idmunicipio : true;
 
-        return iddepFilter && nameFilter;
+        return muniFilter && nameFilter;
       });
     },
 
     disabled () {
-      return (this.requireDepto ? typeof this.iddep !== 'number' : false);
+      return (this.requireMuni ? typeof this.idmunicipio !== 'number' : false);
     }
   },
 
   created () {
-    this.fetchMunicipios();
+    this.fetchEstablecimientos();
   },
 
   watch: {
-    iddep (newValue, oldValue) {
+    idmunicipio (newValue, oldValue) {
       if (oldValue !== null) {
         this.clearAllData();
       }
     },
-    idmunicipio (idmunicipio) {
-      if (typeof idmunicipio === 'number') {
-        if (this.municipios.length !== 0) {
+    idest (idest) {
+      if (typeof idest === 'number') {
+        if (this.establecimientos.length !== 0) {
           // only if fetch has finished
-          this.selectByIdmunicipio(idmunicipio);
+          this.selectByIdest(idest);
         }
       } else {
         this.clearAllData();
@@ -79,15 +77,15 @@ export default {
   },
   
   methods: {
-    async fetchMunicipios () {
+    async fetchEstablecimientos () {
       try {
         // fetch Data
-        const response = await this.$axios.$get('/municipios');
-        this.municipios = response.list;
+        const response = await this.$axios.$get('/establecimientos');
+        this.establecimientos = response.list;
 
         // autoselect
-        if (typeof this.idmunicipio === 'number') {
-          this.selectByIdmunicipio(this.idmunicipio);
+        if (typeof this.idest === 'number') {
+          this.selectByIdest(this.idest);
         }
       } catch (error) {
         this.$errorHandler(error);
@@ -101,10 +99,10 @@ export default {
       }
     },
     unset () {
-      this.$emit('select', { idmunicipio: null });
+      this.$emit('select', { idest: null });
     },
-    selectByIdmunicipio (idmunicipio) {
-      const selected = (this.municipios.filter(option => (option.idmunicipio === idmunicipio)))[0];
+    selectByIdest (idest) {
+      const selected = (this.establecimientos.filter(option => (option.idest === idest)))[0];
       this.select(selected);
     },
     clearAllData () {

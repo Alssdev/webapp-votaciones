@@ -18,10 +18,14 @@
       {{ props.row.nombre }}
     </b-table-column>
     <b-table-column field="municipio.depto.nombre" label="Departamento" searchable sortable v-slot="props">
-      {{ props.row.municipio.depto.nombre }}
+      <nuxt-link :to="{ path: `/departamentos/${props.row.municipio.depto.iddep}/data` }">
+        {{ props.row.municipio.depto.nombre }}
+      </nuxt-link>
     </b-table-column>
     <b-table-column field="municipio.nombre" label="Municipio" searchable sortable v-slot="props">
-      {{ props.row.municipio.nombre }}
+      <nuxt-link :to="{ path: `/municipios/${props.row.municipio.idmunicipio}/data` }">
+        {{ props.row.municipio.nombre }}
+      </nuxt-link>
     </b-table-column>
     <b-table-column label="Datos" v-slot="props" width="80">
       <b-button
