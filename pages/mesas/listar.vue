@@ -39,7 +39,6 @@
         @click="confirmDelete(props.row.idmesa)"
       />
     </b-table-column>
-      
     </b-table>
   </div>
 </template>

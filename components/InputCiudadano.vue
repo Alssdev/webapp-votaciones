@@ -1,13 +1,14 @@
 <template>
   <b-autocomplete
-    v-model="dpi"
+    v-model="dpinombre"
     :data="filteredData"
-    field="dpi"
+    field="dpinombre"
     @select="select"
     @typing="unset"
-    clearable
+    :clearable="!readonly"
     open-on-focus
     placeholder="Buscar ciudadanos por dpi..."
+    :readonly="readonly"
   >
   </b-autocomplete>
 </template>
@@ -18,12 +19,16 @@ export default {
     idemp: {
       type: Number,
       default: null
+    },
+    readonly: {
+      type: Boolean,
+      default: false
     }
   },
 
   data: () => ({
     ciudadanos: [],
-    dpi: '',
+    dpinombre: '',
 
     // control data
     // empty
@@ -33,10 +38,10 @@ export default {
     filteredData() {
       return this.ciudadanos.filter(option => {
         return (
-          option.dpi
+          option.dpinombre
             .toString()
             .toLowerCase()
-            .indexOf(this.dpi.toLowerCase()) >= 0
+            .indexOf(this.dpinombre.toLowerCase()) >= 0
         )
       })
     }
@@ -64,7 +69,12 @@ export default {
       try {
         // fetch data
         const response = await this.$axios.$get('/ciudadanos');
-        this.ciudadanos = response.list;
+        let ciudadanos = response.list;
+
+        this.ciudadanos = ciudadanos.map((c) => {
+          c.dpinombre = `${c.dpi} | ${c.nombres}${c.apellidos}`;
+          return c;
+        });
 
         // autoselect
         if (typeof this.idemp === 'number') {
@@ -77,7 +87,7 @@ export default {
 
     select (option) {
       if (option) {
-        this.dpi = option.dpi;
+        this.dpinombre = option.dpinombre;
         this.$emit('select', option);
       } else {
         this.unset();
@@ -87,7 +97,7 @@ export default {
       this.$emit('select', { idemp: null });
     },
     clearAllData () {
-      this.dpi = '';
+      this.dpinombre = '';
       this.unset();
     },
 

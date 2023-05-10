@@ -1,17 +1,19 @@
 <template>
   <div>
-    <h1 class="title">Crear un partido político</h1>
+    <h1 class="title">Editar partido político
+      <span class="has-text-primary">ID{{ idpartido }}</span>
+    </h1>
 
     <b-field grouped>
       <b-field label="Nombre" expanded>
-        <b-input v-model="nombre" maxlenght="50" placeholder="Nombre del partido" />
+        <b-input v-model="partido.nombre" maxlenght="50" placeholder="Nombre del partido" />
       </b-field>
       <b-field label="Acrónimo">
-        <b-input v-model="acronimo" maxlenght="5" placeholder="ABC" />
+        <b-input v-model="partido.acronimo" maxlenght="5" placeholder="ABC" />
       </b-field>
     </b-field>
     <b-field label="Secretario general">
-      <input-ciudadano @select="selectCiudadano" />
+      <input-ciudadano :idemp="partido.idemp" @select="selectCiudadano" />
     </b-field>
 
     <hr />
@@ -31,7 +33,7 @@
 
     <div class="buttons mt-6">
       <b-button icon-left="arrow-left" @click="$goBack">Regresar</b-button>
-      <b-button icon-left="check-bold" type="is-primary" @click="confirm">Crear</b-button>
+      <b-button icon-left="content-save" type="is-primary" @click="confirm">Guardar</b-button>
     </div>
   </div>
 </template>
@@ -39,21 +41,33 @@
 <script>
 export default {
   data: () => ({
-    nombre: '',
-    acronimo: '',
-    logo: '',
-    idemp: null,
+    idpartido: null,
+    partido: {
+      nombre: '',
+      acronimo: '',
+      logo: '',
+      idemp: null,
+    },
+
+    // control data
   }),
+
+  created () {
+    if (!isNaN(this.$route.params.id)) {
+      this.idpartido = this.$route.params.id;
+      this.fetchData();
+    } 
+  },
 
   methods: {
     async pushData () {
       try {
         const body = this.prepareBodyRequest();
-        await this.$axios.post('/partidos', body);
+        await this.$axios.put(`/partidos/${this.idpartido}`, body);
         
         this.$buefy.notification.open({
           type: 'is-success',
-          message: 'El partido ha sido creado con éxito',
+          message: 'El partido ha sido editado con éxito',
           duration: 5000
         });
         this.$router.go(-1);
@@ -63,10 +77,10 @@ export default {
     },
     prepareBodyRequest () {
       return {
-        nombre: this.nombre,
-        acronimo: this.acronimo,
-        logo: this.logo,
-        idemp: this.idemp
+        nombre: this.partido.nombre,
+        acronimo: this.partido.acronimo,
+        logo: this.partido.logo,
+        idemp: this.partido.idemp
       };
     },
     confirm () {
@@ -85,8 +99,17 @@ export default {
       return true;
     },
 
+    async fetchData () {
+      try {
+        const response = await this.$axios.$get(`/partidos/${this.idpartido}`);
+        this.partido = response.list[0];
+      } catch (error) {
+        this.$errorHandler(error);
+      }
+    },
+
     selectCiudadano (option) {
-      this.idemp = option.idemp;
+      this.partido.idemp = option.idemp;
     }
   }
 
