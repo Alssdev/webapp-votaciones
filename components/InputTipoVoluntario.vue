@@ -4,9 +4,10 @@
     :data="filteredData"
     field="nombre"
     @select="select"
-    clearable
+    :clearable="!readonly"
     open-on-focus
     placeholder="Buscar tipos de voluntarios..."
+    :readonly="readonly"
   >
   </b-autocomplete>
 </template>
@@ -14,10 +15,14 @@
 <script>
 export default {
   props: {
-    idmesa: {
-      type: Number,
+    tipo: {
+      type: String,
       default: null
     },
+    readonly: {
+      type: Boolean,
+      default: false
+    }
   },
 
   data: () => ({
@@ -36,11 +41,9 @@ export default {
   computed: {
     filteredData() {
       return this.tipos.filter(option => {
-        const nFilter = option.nombre
+        return option.nombre
             .toLowerCase()
             .indexOf(this.nombre.toLowerCase()) >= 0;
-
-        return nFilter;
       });
     }
   },

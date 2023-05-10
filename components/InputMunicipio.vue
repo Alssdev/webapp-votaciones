@@ -5,10 +5,11 @@
     field="nombre"
     @select="select"
     @typing="unset"
-    clearable
     open-on-focus
     placeholder="Buscar municipios..."
     :disabled="disabled"
+    :clearable="!readonly"
+    :readonly="readonly"
   >
   </b-autocomplete>
 </template>
@@ -25,6 +26,10 @@ export default {
       default: null
     },
     requireDepto: {
+      type: Boolean,
+      default: false
+    },
+    readonly: {
       type: Boolean,
       default: false
     }

@@ -5,9 +5,10 @@
     field="nombre"
     @select="select"
     @typing="unset"
-    clearable
     open-on-focus
     placeholder="Buscar departamentos..."
+    :clearable="!readonly"
+    :readonly="readonly"
   >
   </b-autocomplete>
 </template>
@@ -18,6 +19,10 @@ export default {
     iddep: {
       type: Number,
       default: null
+    },
+    readonly: {
+      type: Boolean,
+      default: false
     }
   },
 

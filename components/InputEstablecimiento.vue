@@ -8,6 +8,8 @@
     open-on-focus
     placeholder="Buscar establecimientos..."
     :disabled="disabled"
+    :clearable="!readonly"
+    :readonly="readonly"
   >
   </b-autocomplete>
 </template>

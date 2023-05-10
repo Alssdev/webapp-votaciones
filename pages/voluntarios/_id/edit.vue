@@ -5,24 +5,24 @@
     </h1>
 
     <b-field label="Ciudadano">
-      <input-ciudadano />
+      <input-ciudadano :idemp="voluntario.idemp" readonly />
     </b-field>
     <b-field label="Tipo de voluntario">
-      <input-tipo-voluntario @select="selectTipo" />
+      <input-tipo-voluntario :tipo="voluntario.tipo" @select="selectTipo" />
     </b-field>
 
     <hr />
     <b-field label="Departamento">
-      <input-departamento @select="selectDepartamento" />
+      <input-departamento :iddep="iddep" @select="selectDepartamento" />
     </b-field>
     <b-field label="Municipio">
-      <input-municipio :iddep="iddep" requireDepto @select="selectMunicipio" />
+      <input-municipio :idmunicipio="idmunicipio" :iddep="iddep" requireDepto @select="selectMunicipio" />
     </b-field>
     <b-field label="Establecimiento">
-      <input-establecimiento :idmunicipio="idmunicipio" requireMuni @select="selectEstablecimiento" />
+      <input-establecimiento :idest="idest" :idmunicipio="idmunicipio" requireMuni @select="selectEstablecimiento" />
     </b-field>
     <b-field label="No. mesa">
-      <input-mesa :idest="idest" requireEst @select="selectMesa" />
+      <input-mesa :idmesa="idmesa" :idest="idest" requireEst @select="selectMesa" />
     </b-field>
     <hr />
 
@@ -36,6 +36,7 @@
 <script>
 export default {
   data: () => ({
+    idemp: null,
     // voluntario data
     voluntario: {
       idemp: null,
@@ -47,6 +48,7 @@ export default {
     iddep: null,
     idmunicipio: null,
     idest: null,
+    idmesa: null,
   }),
 
   created () {
@@ -98,6 +100,11 @@ export default {
       try {
         const response = await this.$axios.$get(`/voluntarios/${this.idemp}`);
         this.voluntario = response.list[0];
+
+        this.iddep = this.voluntario.mesa.est.municipio.iddep;
+        this.idmunicipio = this.voluntario.mesa.est.idmunicipio;
+        this.idest = this.voluntario.mesa.idest;
+        this.idmesa = this.voluntario.idmesa;
       } catch (error) {
         this.$errorHandler(error);
       }
