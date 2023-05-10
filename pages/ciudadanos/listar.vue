@@ -10,8 +10,11 @@
       striped
       paginated
     >
-      <b-table-column field="idemp" label="No. Emp." width="150" v-slot="props" searchable sortable>
+      <b-table-column field="idemp" label="No. Emp." width="100" v-slot="props" searchable sortable>
         {{ props.row.idemp }}
+      </b-table-column>
+      <b-table-column field="dpi" label="DPI" v-slot="props" width="160" searchable>
+        {{ props.row.dpi }}
       </b-table-column>
       <b-table-column field="nombres" label="Nombres" v-slot="props" searchable>
         {{ props.row.nombres }}

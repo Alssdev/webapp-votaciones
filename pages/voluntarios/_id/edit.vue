@@ -1,9 +1,11 @@
 <template>
   <div>
-    <h1 class="title">Registrar un voluntario de mesa</h1>
+    <h1 class="title">Editar al voluntario de mesa
+      <span class="has-text-primary">ID EMP {{ idemp }}</span>
+    </h1>
 
     <b-field label="Ciudadano">
-      <input-ciudadano @select="selectCiudadano" />
+      <input-ciudadano />
     </b-field>
     <b-field label="Tipo de voluntario">
       <input-tipo-voluntario @select="selectTipo" />
@@ -26,7 +28,7 @@
 
     <div class="buttons mt-6">
       <b-button icon-left="arrow-left" @click="$goBack">Regresar</b-button>
-      <b-button icon-left="check-bold" type="is-primary" @click="confirm">Crear</b-button>
+      <b-button icon-left="content-save" type="is-primary" @click="confirm">Guardar</b-button>
     </div>
   </div>
 </template>
@@ -35,9 +37,11 @@
 export default {
   data: () => ({
     // voluntario data
-    idemp: null,
-    idmesa: null,
-    tipo: null,
+    voluntario: {
+      idemp: null,
+      idmesa: null,
+      tipo: null
+    },
 
     // control data
     iddep: null,
@@ -45,15 +49,22 @@ export default {
     idest: null,
   }),
 
+  created () {
+    if (!isNaN(this.$route.params.id)) {
+      this.idemp = this.$route.params.id;
+      this.fetchData();
+    } 
+  },
+
   methods: {
     async pushData () {
       try {
         const body = this.prepareBodyRequest();
-        await this.$axios.post('/voluntarios', body);
+        await this.$axios.put(`/voluntarios/${this.idemp}`, body);
         
         this.$buefy.notification.open({
           type: 'is-success',
-          message: 'El ciudadano ha sido registrado como voluntario con éxito',
+          message: 'El voluntario ha sido editado con éxito',
           duration: 5000
         });
         this.$router.go(-1);
@@ -63,9 +74,8 @@ export default {
     },
     prepareBodyRequest () {
       return {
-        idemp: this.idemp,
-        idmesa: this.idmesa,
-        tipo: this.tipo
+        idmesa: this.voluntario.idmesa,
+        tipo: this.voluntario.tipo
       };
     },
     confirm () {
@@ -84,6 +94,15 @@ export default {
       return true;
     },
 
+    async fetchData () {
+      try {
+        const response = await this.$axios.$get(`/voluntarios/${this.idemp}`);
+        this.voluntario = response.list[0];
+      } catch (error) {
+        this.$errorHandler(error);
+      }
+    },
+
     selectDepartamento (option) {
       this.iddep = option.iddep;
     },
@@ -94,13 +113,10 @@ export default {
       this.idest = option.idest;
     },
     selectMesa (option) {
-      this.idmesa = option.idmesa;
+      this.voluntario.idmesa = option.idmesa;
     },
     selectTipo (option) {
-      this.tipo = option.tipo;
-    },
-    selectCiudadano (option) {
-      this.idemp = option.idemp;
+      this.voluntario.tipo = option.tipo;
     }
   }
 }
