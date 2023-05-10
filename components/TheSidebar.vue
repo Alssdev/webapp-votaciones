@@ -34,6 +34,7 @@
           <b-menu-item icon="account-group" label="Partidos políticos">
             <b-menu-item icon="pencil" label="Crear" @click="$menu('/partidos/crear')" />
             <b-menu-item icon="magnify" label="Ver lista" @click="$menu('/partidos/listar')" />
+            <b-menu-item icon="badge-account" label="Registro de candidatos" @click="$menu('/partidos/candidatos')" />
           </b-menu-item>
         </b-menu-list>
         <b-menu-list label="Empadronamiento">
