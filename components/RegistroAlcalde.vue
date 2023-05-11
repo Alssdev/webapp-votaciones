@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <h2 class="title is-4">Alcaldes</h2>
+  <div class="pt-5">
+    <h2 class="title is-4 has-text-info">Alcaldes</h2>
 
     <b-field label="Ciudadano">
       <input-ciudadano @select="selectCiudadano" />
