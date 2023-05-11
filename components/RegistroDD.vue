@@ -32,9 +32,6 @@
       <b-table-column field="ciudadano.nombrecompleto" label="Nombre" searchable v-slot="props">
         {{ props.row.ciudadano.nombrecompleto }}
       </b-table-column>
-      <b-table-column label="Departamento" sortable searchable v-slot="props">
-        {{ props.row.ciudadano.municipio.depto.nombre }}
-      </b-table-column>
       <b-table-column label="Eliminar" v-slot="props">
         <b-button
           icon-left="delete"
