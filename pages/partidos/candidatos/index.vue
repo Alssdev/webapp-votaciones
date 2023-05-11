@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="title">Registro de candidatos</h1>
+    <h1 class="title">Candidatos por partido</h1>
 
     <b-field label="Partido">
       <input-partido @select="selectPartido" />

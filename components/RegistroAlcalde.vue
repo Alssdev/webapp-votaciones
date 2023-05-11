@@ -16,7 +16,7 @@
     </b-field>
 
     <div class="buttons mt-5 is-centered">
-      <b-button type="is-info" @click="addToTable">Agregar</b-button>
+      <b-button type="is-info" @click="confirmAdd">Agregar</b-button>
     </div>
 
     <hr />
@@ -38,7 +38,7 @@
         <b-button
           icon-left="delete"
           type="is-danger"
-          @click="deleteAlcalde(props.row.idemp)"
+          @click="confirmDelete(props.row.idemp)"
         />
       </b-table-column>
     </b-table>
@@ -47,6 +47,13 @@
 
 <script>
 export default {
+  props: {
+    idpartido: {
+      type: Number,
+      default: null
+    }
+  },
+
   data: () => ({
     alcaldes: [],
 
@@ -56,30 +63,32 @@ export default {
     ciudadano: { idemp: null }
   }),
 
-  methods: {
-    addToTable () {
-      if (this.validActualRow()) {
-        if (!this.isInTable(this.ciudadano.idemp)) {
-          this.ciudadano.nombrecompleto = `${this.ciudadano.nombres}${this.ciudadano.apellidos}`;
-          this.alcaldes.push({
-            idemp: this.ciudadano.idemp,
-            ciudadano: this.ciudadano,
-            municipio: this.municipio
-          });
-        } else {
-          this.$buefy.notification.open({
-            type: 'is-warning',
-            message: 'Este ciudadano ya está en la lista',
-            duration: 10000
-          });
-        }
+  watch: {
+    idpartido (newValue) {
+      if (typeof newValue === 'number') {
+        this.fetchData();
       } else {
-        this.$buefy.notification.open({
-          type: 'is-warning',
-          message: 'Los datos son incorrectos',
-          duration: 10000
-        });
+        this.alcaldes = [];
+        this.iddep = null;
       }
+    }
+  },
+
+  methods: {
+    async addToTable () {
+      try {
+        // create an alcalde
+        await this.$axios.post('/candidatos', this.prepareBodyRequest());
+        this.$buefy.notification.open({
+          type: 'is-success',
+          message: 'El alcalde ha sido registrado con éxito.',
+          duration: 5000
+        });
+        this.fetchData();
+      } catch (error) {
+        this.$errorHandler(error);
+      }
+      
     },
     validActualRow () {
       let valid = true;
@@ -93,16 +102,6 @@ export default {
 
       return valid;
     },
-    deleteAlcalde (idemp) {
-      for (let i = 0; i < this.alcaldes.length; i++) {
-        const alcalde = this.alcaldes[i];
-
-        if (alcalde.idemp === idemp) {
-          this.alcaldes.splice(i, 1);
-          return;
-        }
-      }
-    },
     isInTable (idemp) {
       for (let i = 0; i < this.alcaldes.length; i++) {
         const alcalde = this.alcaldes[i];
@@ -111,6 +110,88 @@ export default {
           return true;
         }
       }
+    },
+    prepareBodyRequest () {
+      return {
+        idemp: this.ciudadano.idemp,
+        idpartido: this.idpartido,
+        casilla: null,
+        tipo: 'A',
+        idmunicipio: this.municipio.idmunicipio,
+        iddep: null
+      }
+    },
+    confirmAdd () {
+      if (this.validActualRow()) {
+          if (!this.isInTable(this.ciudadano.idemp)) {
+            this.$buefy.dialog.confirm({
+              title: 'Confirmación',
+              message: `Antes de completar el proceso debe 
+              confirmar que está seguro ¿Desea continuar?`,
+              onConfirm: this.addToTable,
+              hasIcon: true,
+              type: 'is-success',
+            });
+          }  else {
+            this.$buefy.notification.open({
+              type: 'is-warning',
+              message: 'Este alcalde ya se encuentra en la tabla.',
+              duration: 10000
+            });
+          }
+        } else {
+          this.$buefy.notification.open({
+            type: 'is-warning',
+            message: 'Los datos son incorrectos.',
+            duration: 10000
+          });
+        }
+    },
+
+    async fetchData () {
+      try {
+        // fetch response
+        const response = await this.$axios.$get(`/candidatos/${this.idpartido}/alcaldes`);
+
+        const alcaldes = [];
+
+        for (const alcalde of response.alcaldes) {
+          alcalde.ciudadano.nombrecompleto = `${alcalde.ciudadano.nombres}${alcalde.ciudadano.apellidos}`;
+          alcaldes.push({
+            idemp: alcalde.ciudadano.idemp,
+            ciudadano: alcalde.ciudadano,
+            municipio: alcalde.municipio
+          });
+        }
+
+        this.alcaldes = alcaldes;
+      } catch (error) {
+        this.$errorHandler(error);
+      }
+    },
+
+    async deleteAlcalde (idemp) {
+      try {
+        await this.$axios.delete(`/candidatos/${idemp}`);
+        this.$buefy.notification.open({
+          type: 'is-success',
+          message: 'El alcalde ha sido borrado con éxito.',
+          duration: 5000
+        });
+        this.fetchData();
+      } catch (error) {
+        this.$errorHandler(error);
+      }
+    },
+    confirmDelete (idemp) {
+      this.$buefy.dialog.confirm({
+        title: 'Confirmación',
+        message: `Antes de completar el proceso debe 
+        confirmar que está seguro ¿Desea continuar?`,
+        onConfirm: () => { this.deleteAlcalde(idemp) },
+        hasIcon: true,
+        type: 'is-success',
+      });
     },
 
     selectDepartamento (option) {
