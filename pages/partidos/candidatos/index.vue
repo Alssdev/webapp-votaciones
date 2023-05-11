@@ -3,7 +3,7 @@
     <h1 class="title">Registro de candidatos</h1>
 
     <b-field label="Partido">
-      <input-partido @select="" />
+      <input-partido @select="selectPartido" />
     </b-field>
 
     <div class="mt-6">

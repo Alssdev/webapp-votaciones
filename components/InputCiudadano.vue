@@ -49,6 +49,7 @@ export default {
 
   watch: {
     idemp (idemp) {
+      console.log('1');
       if (typeof idemp === 'number') {
         if (this.ciudadanos.length !== 0) {
           // only if fetch has finished
