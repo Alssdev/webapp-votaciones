@@ -43,6 +43,14 @@
             <b-menu-item icon="magnify" label="Ver lista" @click="$menu('/ciudadanos/listar')" />
           </b-menu-item>
         </b-menu-list>
+        <b-menu-list label="Votos">
+          <b-menu-item icon="file-document-edit" label="Registro de votos">
+            <b-menu-item icon="form-select" label="Presidencia" @click="$menu('/votos/register?tipo=P')" />
+            <b-menu-item icon="form-select" label="Alcaldía" @click="$menu('/')" />
+            <b-menu-item icon="form-select" label="Diputados de Distrito" @click="$menu('/')" />
+            <b-menu-item icon="form-select" label="Listado Nacional" @click="$menu('/')" />
+          </b-menu-item>
+        </b-menu-list>  
         <b-menu-list label="Reportes">
           <b-menu-item icon="" label="Pendiente..."></b-menu-item>
         </b-menu-list>  
