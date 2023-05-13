@@ -55,6 +55,10 @@ export default {
     idmesa: {
       type: Number,
       default: null
+    },
+    tipo: {
+      type: String,
+      default: null
     }
   },
 
@@ -67,6 +71,12 @@ export default {
 
   created () {
     this.fetchPartidos();
+  },
+
+  watch: {
+    tipo () {
+      this.fetchPartidos();
+    }
   },
 
   methods: {
@@ -89,7 +99,14 @@ export default {
     async pushData () {
       try {
         const body = await this.prepareBodyRequest();
-        console.log(body);
+        await this.$axios.$post('/votos', body);
+
+        this.$buefy.notification.open({
+          type: 'is-success',
+          message: 'Los votos han sido registrados con éxito',
+          duration: 5000
+        });
+        this.$goBack();
       } catch (error) {
         this.$errorHandler(error);
       }
@@ -102,7 +119,7 @@ export default {
 
       return {
         idmesa: this.idmesa,
-        tipo: 'P',
+        tipo: this.tipo,
         detalles,
         votosBlancos: this.blancos,
         votosNulos: this.nulos

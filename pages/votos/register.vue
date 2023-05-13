@@ -28,8 +28,7 @@
       <b-step-item :step="2" label="Votos">
         <h2 class="title has-text-centered">Formulario de votos</h2>
 
-        <votos-presidencia :idmesa="idmesa" v-if="tipo === 'P'" />
-        <votos-alcalde :idmesa="idmesa" v-if="tipo === 'A'" />
+        <registro-votos :idmesa="idmesa" :tipo="tipo" />
       </b-step-item>
 
       <template
@@ -75,9 +74,9 @@ export default {
           return 'Presidencia';
         case 'A':
           return 'Alcaldía';
-        case 'P':
+        case 'D':
           return 'Diputados de distrito';
-        case 'P':
+        case 'N':
           return 'Listado nacional';
       }
     }
