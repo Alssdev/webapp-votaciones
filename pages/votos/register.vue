@@ -29,6 +29,7 @@
         <h2 class="title has-text-centered">Formulario de votos</h2>
 
         <votos-presidencia :idmesa="idmesa" v-if="tipo === 'P'" />
+        <votos-alcalde :idmesa="idmesa" v-if="tipo === 'A'" />
       </b-step-item>
 
       <template
@@ -84,6 +85,12 @@ export default {
 
   created () {
     if (typeof this.$route.query.tipo === 'string') {
+      this.tipo = this.$route.query.tipo;
+    }
+  },
+
+  watch: {
+    '$route.query.tipo': function () {
       this.tipo = this.$route.query.tipo;
     }
   },
