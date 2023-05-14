@@ -52,7 +52,7 @@
           </b-menu-item>
         </b-menu-list>  
         <b-menu-list label="Reportes">
-          <b-menu-item icon="" label="Pendiente..."></b-menu-item>
+          <b-menu-item icon="form-select" label="Padrón por mesa" @click="$menu('/reportes/reporte1')" />
         </b-menu-list>  
       </b-menu>    
     </div>
