@@ -11,7 +11,7 @@
       <b-input v-model="municipio.numh" type="number" step="1" min="0" placeholder="100000" />
     </b-field>
     <b-field label="Departamento">
-      <input-departamento :defaultText="dnombre" @select="selectDepartamento" />
+      <input-departamento :iddep="iddep" @select="selectDepartamento" />
     </b-field>
 
     <div class="buttons mt-6">
@@ -31,7 +31,7 @@ export default {
       iddep: null
     },
 
-    dnombre: null,
+    iddep: null,
   }),
 
   created () {
@@ -54,7 +54,29 @@ export default {
         });
         this.$router.go(-1);
       } catch (error) {
-        this.$errorHandler(error);
+        if (this.$isAxiosError(error)) {
+          const errorCases = [
+            {
+              type: 'column',
+              column_name: 'iddep',
+              message: 'Debe seleccionar un departamento.'
+            },
+            {
+              type: 'constraint',
+              constraint_name: 'muni_numh_positive',
+              message: 'El número de habitantes no puede ser negativo.'
+            },
+            {
+              type: 'constraint',
+              constraint_name: 'muni_no_void_name',
+              message: 'El nombre no puede ser vacío.'
+            }
+          ];
+
+          this.$dataErrorHandler(error, errorCases);
+        } else {
+          this.$errorHandler(error);
+        }
       }
     },
     prepareBodyRequest () {
@@ -84,7 +106,7 @@ export default {
       try {
         const response = await this.$axios.$get(`/municipios/${this.idmunicipio}`);
         this.municipio = response.list[0];
-        this.dnombre = this.municipio.depto.nombre;
+        this.iddep = this.municipio.iddep;
       } catch (error) {
         this.$errorHandler(error);
       }

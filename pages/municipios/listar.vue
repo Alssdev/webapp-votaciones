@@ -80,7 +80,19 @@ export default {
         });
         this.fetchData();
       } catch (error) {
-        this.$errorHandler(error);
+        if (this.$isAxiosError(error)) {
+          const errorCases = [
+            {
+              type: 'constraint',
+              constraint_name: 'establecimientos_idmunicipio_fkey',
+              message: 'De este municipio dependen otras entidades.'
+            }
+          ];
+
+          this.$dataErrorHandler(error, errorCases);
+        } else {
+          this.$errorHandler(error);
+        }
       }
     },
     confirmDelete (nombre) {

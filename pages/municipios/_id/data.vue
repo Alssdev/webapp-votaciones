@@ -73,7 +73,11 @@ export default {
         });
         this.$goBack();
       } catch (error) {
-        this.$errorHandler(error);
+        if (this.$isAxiosError(error)) {
+          this.$dataErrorHandler(error);
+        } else {
+          this.$errorHandler(error);
+        }
       }
     },
     confirmDelete () {

@@ -10,21 +10,7 @@ export default (ctx, inject) => {
   inject('errorHandler', ( error ) => {    
     if (axios.isAxiosError(error)) {
       if (error.response !== undefined) {
-        if (error.response.status === 400) {
-          toast.open({
-            type: 'is-warning',
-            message: error.response.data.message,
-            duration: 10000
-          });
-        } else {
-          notification.open({
-            type: 'is-danger',
-            message: `Ocurrió un error inesperado, por favor no cambie de página y
-            reporte el error`,
-            duration: 10000
-          });
-          console.log(error);
-        }
+        ctx.$dataErrorHandler(error);
       } else {
         notification.open({
           type: 'is-warning',
@@ -39,7 +25,6 @@ export default (ctx, inject) => {
         reporte el error`,
         duration: 10000
       });
-      console.log(error);
     }
   });
 }

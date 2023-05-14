@@ -40,7 +40,29 @@ export default {
         });
         this.$router.go(-1);
       } catch (error) {
-        this.$errorHandler(error);
+        if (this.$isAxiosError(error)) {
+          const errorCases = [
+            {
+              type: 'column',
+              column_name: 'iddep',
+              message: 'Debe seleccionar un departamento.'
+            },
+            {
+              type: 'constraint',
+              constraint_name: 'muni_numh_positive',
+              message: 'El número de habitantes no puede ser negativo.'
+            },
+            {
+              type: 'constraint',
+              constraint_name: 'muni_no_void_name',
+              message: 'El nombre no puede ser vacío.'
+            }
+          ];
+
+          this.$dataErrorHandler(error, errorCases);
+        } else {
+          this.$errorHandler(error);
+        }
       }
     },
     prepareBodyRequest () {

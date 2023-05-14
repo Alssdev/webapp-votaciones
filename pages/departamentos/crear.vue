@@ -32,18 +32,7 @@ export default {
         });
         this.$router.go(-1);
       } catch (error) {
-        if (this.$isAxiosError(error)) {
-          const errorCases = [
-            {
-              constraint_name: 'dep_no_void_name',
-              message: 'El nombre del departamento no puede ser vacío.'
-            }
-          ];
-
-          this.$dataErrorHandler(error.response.data, errorCases);
-        } else {
-          this.$errorHandler(error);
-        }
+        this.$errorHandler(error);
       }
     },
     prepareBodyRequest () {
