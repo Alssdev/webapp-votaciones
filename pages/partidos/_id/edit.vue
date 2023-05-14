@@ -45,9 +45,9 @@ export default {
     partido: {
       nombre: '',
       acronimo: '',
-      logo: '',
       idemp: null,
     },
+    logo: null
 
     // control data
   }),

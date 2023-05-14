@@ -21,6 +21,24 @@ export default (ctx, inject) => {
         message: 'De esta entidad dependen otras por lo que no puede ser eliminada',
         duration: 10000
       });
+    } else if (errorData.code === '23502') {
+      return notification.open({
+        type: 'is-warning',
+        message: 'Revise que todos los campos estén correctamente llenos.',
+        duration: 10000
+      });
+    } else if (errorData.code === '22P02') {
+      return notification.open({
+        type: 'is-warning',
+        message: 'Revise que todos los campos estén correctamente llenos.',
+        duration: 10000
+      });
+    } else if (errorData.code === '23505') {
+      return notification.open({
+        type: 'is-warning',
+        message: 'Completar esta acción produce valores duplicados.',
+        duration: 10000
+      });
     }
 
     notification.open({

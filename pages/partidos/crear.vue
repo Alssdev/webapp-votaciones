@@ -41,7 +41,7 @@ export default {
   data: () => ({
     nombre: '',
     acronimo: '',
-    logo: '',
+    logo: null,
     idemp: null,
   }),
 
@@ -65,7 +65,7 @@ export default {
       return {
         nombre: this.nombre,
         acronimo: this.acronimo,
-        logo: this.logo,
+        logo: '',
         idemp: this.idemp
       };
     },

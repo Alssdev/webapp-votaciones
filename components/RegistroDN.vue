@@ -114,10 +114,6 @@ export default {
         }
     },
     validActualRow () {
-      if (this.ciudadano.idemp === null) return false;
-      if (typeof this.casilla !== 'number') return false;
-      if (typeof this.idpartido !== 'number') return false;
-
       return true;
     },
 

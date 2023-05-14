@@ -55,6 +55,7 @@ export default {
       logo: '',
       idemp: null,
     },
+    logo: null,
 
     // control data
   }),

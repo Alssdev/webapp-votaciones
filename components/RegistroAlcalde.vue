@@ -91,25 +91,7 @@ export default {
       
     },
     validActualRow () {
-      let valid = true;
-
-      if (this.ciudadano.idemp === null) {
-        valid = false;
-      };
-      if (this.municipio.idmunicipio === null) {
-        valid = false;
-      };
-
-      return valid;
-    },
-    isInTable (idemp) {
-      for (let i = 0; i < this.alcaldes.length; i++) {
-        const alcalde = this.alcaldes[i];
-
-        if (alcalde.idemp === idemp) {
-          return true;
-        }
-      }
+      return true;
     },
     prepareBodyRequest () {
       return {
@@ -122,30 +104,14 @@ export default {
       }
     },
     confirmAdd () {
-      if (this.validActualRow()) {
-          if (!this.isInTable(this.ciudadano.idemp)) {
-            this.$buefy.dialog.confirm({
-              title: 'Confirmación',
-              message: `Antes de completar el proceso debe 
-              confirmar que está seguro ¿Desea continuar?`,
-              onConfirm: this.addToTable,
-              hasIcon: true,
-              type: 'is-success',
-            });
-          }  else {
-            this.$buefy.notification.open({
-              type: 'is-warning',
-              message: 'Este alcalde ya se encuentra en la tabla.',
-              duration: 10000
-            });
-          }
-        } else {
-          this.$buefy.notification.open({
-            type: 'is-warning',
-            message: 'Los datos son incorrectos.',
-            duration: 10000
-          });
-        }
+      this.$buefy.dialog.confirm({
+        title: 'Confirmación',
+        message: `Antes de completar el proceso debe 
+        confirmar que está seguro ¿Desea continuar?`,
+        onConfirm: this.addToTable,
+        hasIcon: true,
+        type: 'is-success',
+      });
     },
 
     async fetchData () {
