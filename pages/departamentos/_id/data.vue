@@ -64,7 +64,18 @@ export default {
         });
         this.$goBack();
       } catch (error) {
-        this.$errorHandler(error);
+        if (this.$isAxiosError(error)) {
+          const errorCases = [
+            {
+              constraint_name: 'municipios_iddep_fkey',
+              message: 'Este departamento tiene municipios asociados.'
+            }
+          ];
+
+          this.$dataErrorHandler(error.response.data, errorCases);
+        } else {
+          this.$errorHandler(error);
+        }
       }
     },
     confirmDelete () {

@@ -20,7 +20,13 @@ export default {
   css: ['~/static/bulma.css'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: ['~/plugins/Menu.js', '~/plugins/ErrorHandler.js', '~/plugins/GoBack.js'],
+  plugins: [
+    '~/plugins/Menu.js',
+    '~/plugins/ErrorHandler.js',
+    '~/plugins/GoBack.js',
+    '~/plugins/DataErrorHandler.js',
+    '~/plugins/isAxiosError.js'
+  ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
