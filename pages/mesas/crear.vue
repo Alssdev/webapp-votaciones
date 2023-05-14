@@ -6,6 +6,15 @@
       <b-input v-model="nmesa" type="number" placeholder="Ej. 5" max="10" min="0" />
     </b-field>
 
+    <b-field label="Números de empadronamiento" grouped>
+      <b-field label="Desde" expanded>
+        <b-input v-model.number="cotaInferior" type="number" min="0" />
+      </b-field>
+      <b-field label="Hasta" expanded>
+        <b-input v-model.number="cotaSuperior" type="number" min="0" />
+      </b-field>
+    </b-field>
+
     <hr />
     <b-field label="Departamento">
       <input-departamento @select="selectDepartamento" />
@@ -33,6 +42,8 @@ export default {
     // mesa data
     nmesa: null,
     idest: null,
+    cotaSuperior: 0,
+    cotaInferior: 0,
 
     // control data
     iddep: null,
@@ -59,8 +70,8 @@ export default {
       return {
         nmesa: this.nmesa,
         idest: this.idest,
-        cotasuperior: 1,
-        cotainferior: 0,
+        cotasuperior: this.cotaSuperior,
+        cotainferior: this.cotaInferior,
       };
     },
     confirm () {

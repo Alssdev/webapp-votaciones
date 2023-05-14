@@ -10,10 +10,10 @@
 
     <b-field label="Números de empadronamiento" grouped>
       <b-field label="Desde" expanded>
-        <b-input :value="mesa.cotasuperior" readonly />
+        <b-input :value="mesa.cotainferior" readonly />
       </b-field>
       <b-field label="Hasta" expanded>
-        <b-input :value="mesa.cotainferior" readonly />
+        <b-input :value="mesa.cotasuperior" readonly />
       </b-field>
     </b-field>
 

@@ -8,6 +8,15 @@
       <b-input v-model="mesa.nmesa" type="number" placeholder="Ej. 5" max="10" min="0" />
     </b-field>
 
+    <b-field label="Números de empadronamiento" grouped>
+      <b-field label="Desde" expanded>
+        <b-input v-model.number="mesa.cotainferior" type="number" min="0" />
+      </b-field>
+      <b-field label="Hasta" expanded>
+        <b-input v-model.number="mesa.cotasuperior" type="number" min="0" />
+      </b-field>
+    </b-field>
+
     <hr />
     <b-field label="Departamento">
       <input-departamento :iddep="iddep" @select="selectDepartamento" />
@@ -45,7 +54,9 @@ export default {
     idmesa: null,
     mesa: {
       nmesa: null,
-      idest: null
+      idest: null,
+      cotainferior: 0,
+      cotasuperior: 0
     },
 
     // control data
@@ -64,9 +75,7 @@ export default {
     async pushData () {
       try {
         const body = this.prepareBodyRequest();
-        console.log(body);
         await this.$axios.put(`/mesas/${this.idmesa}`, body);
-
         
         this.$buefy.notification.open({
           type: 'is-success',
@@ -82,8 +91,8 @@ export default {
       return {
         nmesa: this.mesa.nmesa,
         idest: this.mesa.idest,
-        cotasuperior: 1,
-        cotainferior: 0,
+        cotasuperior: this.mesa.cotasuperior,
+        cotainferior: this.mesa.cotainferior,
       };
     },
     confirm () {
@@ -110,7 +119,9 @@ export default {
 
         this.mesa = {
           nmesa: mesa.nmesa,
-          idest: null
+          idest: null,
+          cotainferior: mesa.cotainferior,
+          cotasuperior: mesa.cotasuperior
         }
 
         this.iddep = municipio.depto.iddep;
