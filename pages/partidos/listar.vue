@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 class="title">Lista de Mesas</h1>
+    <h1 class="title">Lista de partidos</h1>
 
     <b-table
       :data="list"

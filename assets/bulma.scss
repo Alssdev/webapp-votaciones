@@ -2,12 +2,12 @@
 @import "./node_modules/bulma/sass/utilities/_all";
 
 // Set your colors
-$primary: #102d49;
+$primary: #001D4A;
 $primary-light: findLightColor($primary);
 $primary-dark: findDarkColor($primary);
 $primary-invert: findColorInvert($primary);
 
-$info: #0972af;
+$info: #006992;
 $info-light: findLightColor($info);
 $info-dark: findDarkColor($info);
 $info-invert: findColorInvert($info);
@@ -17,7 +17,7 @@ $success-light: findLightColor($success);
 $success-dark: findDarkColor($success);
 $success-invert: findColorInvert($success);
 
-$warning: #ffc754;
+$warning: #ECA400;
 $warning-light: findLightColor($warning);
 $warning-dark: findDarkColor($warning);
 $warning-invert: findColorInvert($warning);
@@ -27,7 +27,7 @@ $danger-light: findLightColor($danger);
 $danger-dark: findDarkColor($danger);
 $danger-invert: findColorInvert($danger);
 
-$dark: #140f07;
+$dark: #001D4A;
 $dark-light: findLightColor($dark);
 $dark-dark: findDarkColor($dark);
 $dark-invert: findColorInvert($dark);
