@@ -7,6 +7,7 @@
         <tr>
           <th class="has-text-centered">Logo</th>
           <th class="has-text-centered">Partido</th>
+          <th class="has-text-centered">Acrónimo</th>
           <th class="has-text-centered">Nombre completo</th>
           <th class="has-text-centered" width="210">Votos</th>
         </tr>
@@ -20,6 +21,9 @@
             <nuxt-link :to="{ path: `/partidos/${detail.idpartido}/data` }">
               {{ detail.nombre }}
             </nuxt-link>
+          </td>
+          <td class="has-text-centered is-vcentered">
+            {{ detail.acronimo }}
           </td>
           <td class="has-text-centered is-vcentered">
             <nuxt-link :to="{ path: `/ciudadanos/${detail.idemp}/data` }">

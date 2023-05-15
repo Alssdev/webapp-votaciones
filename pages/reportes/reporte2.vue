@@ -47,16 +47,16 @@
           <tbody>
             <tr v-for="(detail, index) in details" :key="index">
               <td>
-                <b-image src="https://picsum.photos/600/400" ratio="1by1" />
+                <b-image :src="`http://localhost:4000/logos/${detail.logo}`" ratio="1by1" />
               </td>
               <td class="has-text-centered is-vcentered">
-                {{ detail.partido.nombre }}
+                {{ detail.nombre }}
               </td>
               <td class="has-text-centered is-vcentered">
-                {{ detail.partido.acronimo }}
+                {{ detail.acronimo }}
               </td>
               <td class="has-text-centered is-vcentered">
-                <b-input :value="detail.cantidad" readonly />
+                {{ detail.cantidad }}
               </td>
             </tr>
           </tbody>
@@ -137,7 +137,10 @@ export default {
       try {
         const api = `reportes/${this.idmesa}/${this.tipo}/mesa_tipo`;
         const response = await this.$axios.$get(api);
-        console.log(response);
+
+        this.details = response.list;
+        this.blancos = response.blancos;
+        this.nulos = response.nulos;
       } catch (error) {
         this.$errorHandler(error);
       }
