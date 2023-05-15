@@ -15,6 +15,7 @@
         <tr>
           <th class="has-text-centered">Logo</th>
           <th class="has-text-centered">Partido</th>
+          <th class="has-text-centered">Acrónimo</th>
           <th class="has-text-centered">Nombre completo</th>
           <th class="has-text-centered" width="210">Votos</th>
         </tr>
@@ -28,6 +29,9 @@
             <nuxt-link :to="{ path: `/partidos/${detail.idpartido}/data` }">
               {{ detail.nombre }}
             </nuxt-link>
+          </td>
+          <td class="has-text-centered is-vcentered">
+            {{ detail.acronimo }}
           </td>
           <td class="has-text-centered is-vcentered">
             <nuxt-link :to="{ path: `/ciudadanos/${detail.idemp}/data` }">
@@ -45,10 +49,10 @@
     <div class="columns">
       <div class="column">
         <b-field label="Votos en blanco">
-          <b-input v-model.number="blancos" type="number" />
+          <b-input :value="blancos" type="number" readonly />
         </b-field>
         <b-field label="Votos nulos">
-          <b-input v-model.number="nulos" type="number" />
+          <b-input :value="nulos" type="number" readonly />
         </b-field>
       </div>
       <div class="column"></div>
@@ -66,6 +70,8 @@ export default {
   data: () => ({
     details: [],
     idmunicipio: null,
+    blancos: null,
+    nulos: null,
     
     // control data
     iddep: null,
@@ -87,6 +93,9 @@ export default {
         const api = `/reportes/${this.idmunicipio}/votos_alcalde`;
         const response = await this.$axios.$get(api);
         this.details = response.list;
+
+        this.blancos = response.blancos.conteo;
+        this.nulos = response.nulos.conteo;
       } catch (error) {
         this.$errorHandler(error);
       }

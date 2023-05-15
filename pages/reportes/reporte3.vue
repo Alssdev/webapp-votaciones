@@ -41,10 +41,10 @@
     <div class="columns">
       <div class="column">
         <b-field label="Votos en blanco">
-          <b-input v-model.number="blancos" type="number" />
+          <b-input :value="blancos" type="number" readonly />
         </b-field>
         <b-field label="Votos nulos">
-          <b-input v-model.number="nulos" type="number" />
+          <b-input :value="nulos" type="number" readonly />
         </b-field>
       </div>
       <div class="column"></div>
