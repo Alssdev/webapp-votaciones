@@ -58,6 +58,8 @@
           <b-menu-item icon="form-select" label="Resultados alcaldía" @click="$menu('/reportes/reporte4')" />
           <b-menu-item icon="form-select" label="Resultados Diputados de Distrito" @click="$menu('/reportes/reporte5')" />
           <b-menu-item icon="form-select" label="Resultados Listado Nacional" @click="$menu('/reportes/reporte6')" />
+          <b-menu-item icon="form-select" label="Representantes de Distrito" @click="$menu('/reportes/reporte7')" />
+          <b-menu-item icon="form-select" label="Representantes de Listado Nacional" @click="$menu('/reportes/reporte8')" />
         </b-menu-list>  
       </b-menu>    
     </div>
