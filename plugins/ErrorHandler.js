@@ -7,7 +7,7 @@ export default (ctx, inject) => {
   /* 
     This plugins allows handler errors globally
   */
-  inject('errorHandler', ( error ) => {    
+  inject('errorHandler', ( error ) => {
     if (axios.isAxiosError(error)) {
       if (error.response !== undefined) {
         ctx.$dataErrorHandler(error);
@@ -26,5 +26,7 @@ export default (ctx, inject) => {
         duration: 10000
       });
     }
+
+    console.log(error);
   });
 }

@@ -16,7 +16,7 @@
 
     <hr />
       <b-field>
-        <b-upload v-model="logo" drag-drop expanded>
+        <b-upload v-model="logo" accept="image/*" drag-drop expanded>
           <section class="section">
             <div class="content has-text-centered">
               <p>
@@ -49,7 +49,14 @@ export default {
     async pushData () {
       try {
         const body = this.prepareBodyRequest();
-        await this.$axios.post('/partidos', body);
+
+        const formData = new FormData();
+        formData.append('logo', this.logo);
+        formData.append('nombre', body.nombre);
+        formData.append('acronimo', body.acronimo);
+        formData.append('idemp', body.idemp);
+        const headers = { 'Content-Type': 'multipart/form-data' };
+        await this.$axios.post('/partidos', formData, { headers });
         
         this.$buefy.notification.open({
           type: 'is-success',
@@ -65,7 +72,6 @@ export default {
       return {
         nombre: this.nombre,
         acronimo: this.acronimo,
-        logo: '',
         idemp: this.idemp
       };
     },

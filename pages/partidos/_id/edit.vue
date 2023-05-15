@@ -16,21 +16,6 @@
       <input-ciudadano :idemp="partido.idemp" @select="selectCiudadano" />
     </b-field>
 
-    <hr />
-      <b-field>
-        <b-upload v-model="logo" drag-drop expanded>
-          <section class="section">
-            <div class="content has-text-centered">
-              <p>
-                <b-icon icon="upload" size="is-large"></b-icon>
-              </p>
-              <p>Suelte la imágen de logo aquí.</p>
-            </div>
-          </section>
-        </b-upload>
-      </b-field>
-    <hr />
-
     <div class="buttons mt-6">
       <b-button icon-left="arrow-left" @click="$goBack">Regresar</b-button>
       <b-button icon-left="content-save" type="is-primary" @click="confirm">Guardar</b-button>
@@ -79,7 +64,6 @@ export default {
       return {
         nombre: this.partido.nombre,
         acronimo: this.partido.acronimo,
-        logo: this.partido.logo,
         idemp: this.partido.idemp
       };
     },

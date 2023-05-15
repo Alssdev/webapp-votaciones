@@ -14,13 +14,17 @@
       <tbody>
         <tr v-for="(detail, index) in details" :key="index">
           <td>
-            <b-image src="https://picsum.photos/600/400" ratio="1by1" />
+            <b-image :src="`http://localhost:4000/logos/${detail.logo}`" ratio="1by1" />
           </td>
           <td class="has-text-centered is-vcentered">
-            
+            <nuxt-link :to="{ path: `/partidos/${detail.idpartido}/data` }">
+              {{ detail.nombre }}
+            </nuxt-link>
           </td>
           <td class="has-text-centered is-vcentered">
-            {{ `${detail.nombres}${detail.apellidos}` }}
+            <nuxt-link :to="{ path: `/ciudadanos/${detail.idemp}/data` }">
+              {{ `${detail.nombres}${detail.apellidos}` }}
+            </nuxt-link>
           </td>
           <td class="has-text-centered is-vcentered">
             {{ detail.conteo }}
@@ -52,7 +56,9 @@
 <script>
 export default {
   data: () => ({
-    details: []
+    details: [],
+    blancos: 0,
+    nulos: 0
   }),
 
   created () {
@@ -65,6 +71,8 @@ export default {
         const api = `/reportes/votos_presidente`;
         const response = await this.$axios.$get(api);
         this.details = response.list;
+        this.blancos = response.blancos.sum;
+        this.nulos = response.nulos.sum;
       } catch (error) {
         this.$errorHandler(error);
       }

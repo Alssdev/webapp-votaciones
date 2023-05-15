@@ -17,19 +17,11 @@
     </b-field>
 
     <hr />
-      <b-field>
-        <b-upload disabled v-model="logo" drag-drop expanded>
-          <section class="section">
-            <div class="content has-text-centered">
-              <p>
-                <b-icon icon="upload" size="is-large"></b-icon>
-              </p>
-              <p>Suelte la imágen de logo aquí.</p>
-            </div>
-          </section>
-        </b-upload>
-      </b-field>
-    <hr />
+    <div class="is-flex is-justify-content-center">
+      <figure class="image is-128x128">
+        <img :src="`http://localhost:4000/logos/${partido.logo}`">
+      </figure>
+    </div>
 
     <div class="buttons mt-6">
       <b-button icon-left="arrow-left" @click="$goBack">Regresar</b-button>

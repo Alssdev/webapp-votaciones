@@ -117,7 +117,7 @@ export default {
     selectMesa (option) {
       this.idmesa = option.idmesa;
       this.mesa = option;
-    },
+    }
   }
 }
 </script>

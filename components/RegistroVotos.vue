@@ -13,7 +13,9 @@
         <tbody>
           <tr v-for="(detail, index) in details" :key="index">
             <td>
-              <b-image src="https://picsum.photos/600/400" ratio="1by1" />
+              <figure class="image">
+                <b-image :src="`http://localhost:4000/logos/${detail.partido.logo}`" ratio="1by1" />
+              </figure>
             </td>
             <td class="has-text-centered is-vcentered">
               {{ detail.partido.nombre }}

@@ -1,21 +1,12 @@
 <template>
   <div>
-    <h1 class="title">Resultados de elección de alcalde</h1>
-
-    <b-field label="Departamento">
-      <input-departamento @select="selectDeparamento" />
-    </b-field>
-    <b-field label="Municipio">
-      <input-municipio :iddep="iddep" requireDepto @select="selectMunicipio" />
-    </b-field>
-    <hr />
+    <h1 class="title">Resultados de elección de listado nacional</h1>
 
     <table class="table is-fullwidth is-hoverable is-bordered is-striped">
       <thead>
         <tr>
           <th class="has-text-centered">Logo</th>
           <th class="has-text-centered">Partido</th>
-          <th class="has-text-centered">Nombre completo</th>
           <th class="has-text-centered" width="210">Votos</th>
         </tr>
       </thead>
@@ -27,11 +18,6 @@
           <td class="has-text-centered is-vcentered">
             <nuxt-link :to="{ path: `/partidos/${detail.idpartido}/data` }">
               {{ detail.nombre }}
-            </nuxt-link>
-          </td>
-          <td class="has-text-centered is-vcentered">
-            <nuxt-link :to="{ path: `/ciudadanos/${detail.idemp}/data` }">
-              {{ `${detail.nombres}${detail.apellidos}` }}
             </nuxt-link>
           </td>
           <td class="has-text-centered is-vcentered">
@@ -65,28 +51,22 @@
 export default {
   data: () => ({
     details: [],
-    idmunicipio: null,
-    
-    // control data
-    iddep: null,
+    blancos: 0,
+    nulos: 0,
   }),
 
-  watch: {
-    idmunicipio (idmunicipio) {
-      if (typeof idmunicipio === 'number') {
-        this.fetchData();
-      } else {
-        this.details = [];
-      }
-    }
+  created () {
+    this.fetchData();
   },
 
   methods: {
     async fetchData () {
       try {
-        const api = `/reportes/${this.idmunicipio}/votos_alcalde`;
+        const api = `/reportes/votos_diputado_nacional`;
         const response = await this.$axios.$get(api);
         this.details = response.list;
+        this.blancos = response.blancos.sum;
+        this.nulos = response.nulos.sum;
       } catch (error) {
         this.$errorHandler(error);
       }
@@ -94,10 +74,7 @@ export default {
 
     selectDeparamento (option) {
       this.iddep = option.iddep;
-    },
-    selectMunicipio (option) {
-      this.idmunicipio = option.idmunicipio;
-    },
+    }
   }
 }
 </script>
