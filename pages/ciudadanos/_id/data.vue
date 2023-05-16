@@ -4,6 +4,9 @@
       <span class="has-text-primary">ID{{ idemp }}</span>
     </h1>
   
+    <b-field label="No. Emp">
+      <b-input :value="ciudadano.idemp" readonly />
+    </b-field>
     <b-field label="DPI">
       <b-input :value="ciudadano.dpi" readonly />
     </b-field>
@@ -15,9 +18,6 @@
       </b-field>
       <b-field label="Segundo nombre" expanded>
         <b-input :value="ciudadano.nombre2" readonly />
-      </b-field>
-      <b-field label="Tercer nombre" expanded>
-        <b-input :value="ciudadano.nombre3" readonly />
       </b-field>
     </b-field>
 

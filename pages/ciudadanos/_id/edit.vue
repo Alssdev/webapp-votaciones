@@ -16,9 +16,6 @@
       <b-field label="Segundo nombre" expanded>
         <b-input v-model="ciudadano.nombre2" maxlength="33" />
       </b-field>
-      <b-field label="Tercer nombre" expanded>
-        <b-input v-model="ciudadano.nombre3" maxlength="33" />
-      </b-field>
     </b-field>
 
     <b-field grouped>
